@@ -1,0 +1,35 @@
+----------- javax.net.ssl.SSLHandshakeException
+
+SEVERE: Control request exception
+java.io.IOException: Client not online
+	at com.dukascopy.transport.client.TransportClient.controlRequest(TransportClient.java:520)
+	at com.dukascopy.transport.client.TransportClient.controlRequest(TransportClient.java:482)
+	at com.dukascopy.transport.client.TransportClient.controlRequest(TransportClient.java:581)
+	at com.dukascopy.api.impl.connect.DCClientImpl$7.run(DCClientImpl.java:1025)
+	at com.dukascopy.api.impl.connect.DCClientImpl$7.run(DCClientImpl.java:1006)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at com.dukascopy.api.impl.connect.DCClientImpl.setSubscribedInstruments(DCClientImpl.java:1006)
+	at com.dukascopy.api.impl.connect.DCClientImpl.connectedInit(DCClientImpl.java:597)
+	at com.dukascopy.api.impl.connect.DCClientImpl.authorized(DCClientImpl.java:840)
+	at com.dukascopy.transport.client.events.AuthorizedEvent.execute(AuthorizedEvent.java:17)
+	at com.dukascopy.transport.client.events.EventTask.run(EventTask.java:34)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:662)
+
+Jan 9, 2013 10:10:43 AM edu.rabo.jfx.main.SystemListener onConnect
+INFO: Connected
+Jan 9, 2013 10:10:51 AM com.dukascopy.charts.data.datacache.metadata.FeedMetadataManager getFirstTimeFromDFS
+SEVERE: Request to DFS timed out, timeout [10000], request [{"id":0,"instruments":"EUR/PLN,EUR/DKK,AUD/NZD,EUR/AUD,EUR/USD,AUD/CAD,EUR/CAD,AUD/CHF,CAD/HKD,CAD/JPY,EUR/JPY,USD/JPY,CHF/JPY,AUD/JPY,EUR/SGD,USD/PLN,USD/DKK,USD/ZAR,GBP/JPY,NZD/USD,GBP/CAD,NZD/CAD,EUR/NZD,SGD/JPY,USD/CHF,USD/MXN,HKD/JPY,XAU/USD,GBP/AUD,USD/RUB,NZD/CHF,CHF/SGD,USD/SEK,USD/SGD,EUR/CHF,GBP/USD,EUR/GBP,XAG/USD,GBP/NZD,EUR/SEK,AUD/SGD,GBP/CHF,NZD/JPY,EUR/TRY,CAD/CHF,AUD/USD,USD/HKD,USD/CAD,EUR/HKD,USD/TRY,USD/NOK,EUR/NOK","type":"df_history_start_request"}]
+com.dukascopy.charts.data.datacache.DataCacheException: Request to DFS timed out, timeout [10000], request [{"id":0,"instruments":"EUR/PLN,EUR/DKK,AUD/NZD,EUR/AUD,EUR/USD,AUD/CAD,EUR/CAD,AUD/CHF,CAD/HKD,CAD/JPY,EUR/JPY,USD/JPY,CHF/JPY,AUD/JPY,EUR/SGD,USD/PLN,USD/DKK,USD/ZAR,GBP/JPY,NZD/USD,GBP/CAD,NZD/CAD,EUR/NZD,SGD/JPY,USD/CHF,USD/MXN,HKD/JPY,XAU/USD,GBP/AUD,USD/RUB,NZD/CHF,CHF/SGD,USD/SEK,USD/SGD,EUR/CHF,GBP/USD,EUR/GBP,XAG/USD,GBP/NZD,EUR/SEK,AUD/SGD,GBP/CHF,NZD/JPY,EUR/TRY,CAD/CHF,AUD/USD,USD/HKD,USD/CAD,EUR/HKD,USD/TRY,USD/NOK,EUR/NOK","type":"df_history_start_request"}]
+	at com.dukascopy.charts.data.datacache.CurvesJsonProtocolHandler.processMessage(CurvesJsonProtocolHandler.java:1709)
+	at com.dukascopy.charts.data.datacache.metadata.FeedMetadataManager.getFirstTimeFromDFS(FeedMetadataManager.java:195)
+	at com.dukascopy.charts.data.datacache.metadata.FeedMetadataManager.checkDFSFillAllCaches(FeedMetadataManager.java:298)
+	at com.dukascopy.charts.data.datacache.metadata.FeedMetadataManager.preloadCache(FeedMetadataManager.java:356)
+	at com.dukascopy.charts.data.datacache.FeedDataProvider$1.run(FeedDataProvider.java:272)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:441)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:662)

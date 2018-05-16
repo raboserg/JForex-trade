@@ -1,0 +1,42 @@
+
+project(':robot') {
+    dependencies {
+
+        compile('com.dukascopy.dds2:DDS2-jClient-JForex:3.3.+') {
+            exclude group: 'org.slf4j', module: 'slf4j-jdk14'
+        }
+        compile('com.dukascopy.api:JForex-API:2.13.+')
+
+		compile('org.springframework:spring-context:5.0.5.RELEASE')
+		compile('org.springframework:spring-beans:5.0.5.RELEASE')
+        
+        compile('cglib:cglib:2.+')
+        compile('commons-io:commons-io:1.4')
+		compile('org.apache.commons:commons-math:2.+')
+        compile('org.apache.commons:commons-lang3:3.+')		
+		compile('commons-collections:commons-collections:3.+')
+        
+		testCompile('org.springframework:spring-test:4.0.5.RELEASE')
+	        
+    }
+}
+
+task performTest(type: Test) {
+    def endTimeTestSuite, totalTimeExecutionTestSuite
+    doFirst { descriptor ->
+        totalTimeExecutionTestSuite = 0
+        logger.lifecycle("RUNNING: " + descriptor)
+    }
+    afterSuite { descriptor, result ->
+        if (descriptor.className != null && result.resultType == TestResult.ResultType.SUCCESS) {
+            logger.lifecycle("TEST CLASS: " + descriptor)
+            endTimeTestSuite = result.endTime - result.startTime
+            logger.lifecycle("TEST COUNT: " + result.testCount + ", TOTAL TIME TESTS: " + endTimeTestSuite + " ms")
+            totalTimeExecutionTestSuite += endTimeTestSuite
+        }
+    }
+    doLast { descriptor ->
+        logger.lifecycle("CANCEL: " + descriptor)
+        logger.lifecycle("TOTAL TIME EXECUTION TESTS: " + totalTimeExecutionTestSuite + " ms")
+    }
+}

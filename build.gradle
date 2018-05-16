@@ -1,0 +1,89 @@
+apply plugin: 'application'
+
+buildscript {
+	ext {
+		springBootVersion = '1.5.6.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'org.springframework.boot'
+
+configurations.all {
+    exclude module: 'slf4j-log4j12'
+}
+
+allprojects {
+    description = 'Robot Trader Sample Application'
+    group = 'edu.rabo.jfx'
+    version = '1.0.0'
+
+    repositories {
+        mavenCentral()
+        maven { url "http://repo1.maven.org/maven2" }
+        maven { url "http://repository.springsource.com/maven/bundles/milestone" }
+        maven { url "http://repository.springsource.com/maven/bundles/external" }
+        maven { url "http://repository.springsource.com/maven/bundles/release" }
+        //https://www.dukascopy.com/client/jforexlib/publicrepo/com/dukascopy/dds2/DDS2-jClient-JForex/3.3.0/
+        //https://www.dukascopy.com/client/jforexlib/publicrepo/com/dukascopy/api/JForex-API/2.13.49/
+        maven { url "http://www.dukascopy.com/client/jforexlib/publicrepo" }
+    }
+    
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = "1.8"
+        targetCompatibility = "1.8"
+    }
+}
+
+
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+
+    sourceSets {
+        main {
+            java {
+                srcDir "$projectDir/src/main/java"
+            }
+            resources {
+                srcDir "$projectDir/src/main/resources"
+            }
+        }
+    }
+
+    dependencies {
+        testCompile 'junit:junit:4.+'
+    }
+}
+
+dependencies {
+
+    mainClassName = 'edu.rabo.jfx.ClientInitializerImpl'
+    compile project(':robot')
+
+    jar {
+        from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+
+        manifest {
+            attributes(
+                    "Implementation-Title": "",
+                    "Implementation-Version": version,
+                    "Built-On": new Date().format('yyyy-mm-dd HH:MM:ss'),
+                    "Project": "robot",
+                    "Version": version,
+                    "Build-Type": version,
+                    "Platform-Search": "true",
+                    "Main-Class": mainClassName
+            )
+        }
+    }
+}
+
+//installApp.dependsOn ':build'
