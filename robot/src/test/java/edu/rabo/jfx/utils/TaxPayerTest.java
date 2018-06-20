@@ -7,7 +7,8 @@ import org.junit.Test;
 
 public class TaxPayerTest {
 
-	final static long income = 10000000;
+	private static final long income = 10000000;
+	private static final long outcome = 4000000;
 	private static final Person person = new Person(income);
 	private static final Trust nonProfit = new Trust(income, true);
 	private static final Trust forProfit = new Trust(income, false);
@@ -35,9 +36,9 @@ public class TaxPayerTest {
 		final TaxStrategy<Person> dodgingStrategy = new DodgingTaxStrategy<Person>();
 		final TaxStrategy<Trust> trustStrategy = new TrustTaxStrategy();
 		
-		Assert.assertTrue(defaultStrategy.computeTax(person) == 4000000);		
+		Assert.assertTrue(defaultStrategy.computeTax(person) == outcome);		
 		Assert.assertTrue(dodgingStrategy.computeTax(person) == 0);
 		Assert.assertTrue(trustStrategy.computeTax(nonProfit) == 0);
-		Assert.assertTrue(trustStrategy.computeTax(forProfit) == 4000000);
+		Assert.assertTrue(trustStrategy.computeTax(forProfit) == outcome);
 	}
 }
